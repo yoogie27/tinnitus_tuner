@@ -1,11 +1,14 @@
 import React from 'react';
-import { Info, Activity } from 'lucide-react';
+import { Activity, ArrowLeft } from 'lucide-react';
+import { AppView } from '../types';
 
 interface HeaderProps {
-  onInfoClick: () => void;
+  view: AppView;
+  onBackToHub: () => void;
+  frequency: number | null;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onInfoClick }) => {
+export const Header: React.FC<HeaderProps> = ({ view, onBackToHub, frequency }) => {
   return (
     <header className="w-full flex justify-between items-center py-4 border-b border-slate-800">
       <div className="flex items-center gap-3">
@@ -14,17 +17,31 @@ export const Header: React.FC<HeaderProps> = ({ onInfoClick }) => {
         </div>
         <div>
           <h1 className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-            Tinnitus Matcher
+            Tinnitus Therapy
           </h1>
-          <p className="text-xs text-slate-400">Frequency & Phase Tool</p>
+          <p className="text-xs text-slate-400">
+            {view === 'wizard' && 'Frequency Matching Wizard'}
+            {view === 'hub' && 'Therapy Hub'}
+            {view === 'therapy' && 'Active Therapy'}
+            {view === 'advanced' && 'Advanced Manual Mode'}
+          </p>
         </div>
       </div>
-      <button 
-        onClick={onInfoClick}
-        className="p-2 text-slate-400 hover:text-cyan-400 transition-colors rounded-full hover:bg-slate-900"
-      >
-        <Info className="w-5 h-5" />
-      </button>
+      <div className="flex items-center gap-3">
+        {frequency !== null && view !== 'wizard' && (
+          <span className="text-xs text-slate-500 font-mono hidden sm:block">
+            {frequency.toFixed(1)} Hz
+          </span>
+        )}
+        {view === 'advanced' && (
+          <button
+            onClick={onBackToHub}
+            className="flex items-center gap-1 text-sm text-slate-400 hover:text-cyan-400 transition-colors px-3 py-1.5 rounded-lg hover:bg-slate-800"
+          >
+            <ArrowLeft className="w-4 h-4" /> Therapies
+          </button>
+        )}
+      </div>
     </header>
   );
 };
