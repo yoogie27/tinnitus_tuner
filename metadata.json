@@ -1,0 +1,5 @@
+{
+  "name": "Tinnitus Matcher & Phase Tool",
+  "description": "A precision audio tool to generate, fine-tune, and lock specific sine wave frequencies to match tinnitus, with phase inversion capabilities.",
+  "requestFramePermissions": []
+}
